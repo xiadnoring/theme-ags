@@ -1,0 +1,29 @@
+@use './colors' as *;
+@use './material' as *;
+@use './lib_mixins' as *;
+
+.settings {
+    background-color: $default_widget_bg;
+    border-radius: 1rem;
+
+    .settings-content {
+        .btn-setting-param {
+            min-width: 300px;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            min-height: 2rem;
+        }
+
+        .btn-setting-param:hover {
+            border-radius: 1rem;
+        }
+    }
+
+    .settings-titlebar {
+        .btn-transparent {
+            border-top-left-radius: 1rem;
+        }
+    }
+
+    
+}

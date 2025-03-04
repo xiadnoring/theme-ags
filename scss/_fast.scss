@@ -1,0 +1,186 @@
+$steps: (
+    1: 0.2rem,
+    2: 0.4rem,
+    3: 0.8rem,
+    4: 1.0rem,
+    5: 1.3rem,
+    6: 1.6rem
+);
+
+$font_size: (
+    0: 0.7rem,
+    1: 1rem,
+    '1-5': 1.3rem,
+    2: 1.5rem,
+    3: 1.8rem,
+    4: 2.3rem,
+    5: 2.8rem,
+    6: 3rem,
+    7: 3.5rem,
+    8: 4rem,
+    9: 4.5rem
+);
+
+$border_size: (
+    0: 0,
+    1: 1px,
+    2: 2px,
+    3: 3px,
+    4: 4px,
+    5: 5px,
+    6: 6px
+);
+
+@each $key, $value in $font_size {
+    .font-#{$key} {
+        font-size: #{$value};
+    }
+}
+
+.border {
+    
+}
+
+@each $key, $value in $border_size {
+    .border-#{$key} {
+        border-width: #{$value};
+    }
+}
+
+@each $key, $value in $steps {
+    .rounded-#{$key} {
+        border-radius: #{$value};
+    }
+
+    .gap-h-#{$key}>*:not(:first-child) {
+        margin-left: #{$value};
+    }
+
+    .gap-v-#{$key}>*:not(:first-child) {
+        margin-top: #{$value};
+    }
+
+    .top-#{$key} {
+        margin-top: #{$value};
+    }
+
+    .bottom-#{$key} {
+        margin-bottom: #{$value};
+    }
+
+    .p-#{$key} {
+        padding: #{$value};
+    }
+
+    .m-#{$key} {
+        margin: #{$value};
+    }
+
+    .mx-#{$key} {
+        margin-right: #{$value};
+        margin-left: #{$value};
+    }
+
+    .my-#{$key} {
+        margin-top: #{$value};
+        margin-bottom: #{$value};
+    }
+
+    .ms-#{$key} {
+        margin-left: #{$value};
+    }
+
+    .me-#{$key} {
+        margin-right: #{$value};
+    }
+
+    .mt-#{$key} {
+        margin-top: #{$value};
+    }
+
+    .mb-#{$key} {
+        margin-bottom: #{$value};
+    }
+    
+    .px-#{$key} {
+        padding-left: #{$value};
+        padding-right: #{$value};
+    }
+
+    .py-#{$key} {
+        padding-top: #{$value};
+        padding-bottom: #{$value};
+    }
+    
+    .ps-#{$key} {
+        padding-left: #{$value};
+    }
+
+    .pe-#{$key} {
+        padding-right: #{$value};
+    }
+
+    .pt-#{$key} {
+        padding-top: #{$value};
+    }
+
+    .pb-#{$key} {
+        padding-bottom: #{$value};
+    }
+}
+
+.icon-2 {
+    font-size: 3.5rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.font-weight-100 {
+    font-weight: 100;
+}
+
+.font-weight-200 {
+    font-weight: 200;
+}
+
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.font-weight-800 {
+    font-weight: 800;
+}
+
+.font-weight-900 {
+    font-weight: 900;
+}
+
+.text-gray {
+    color: gray;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-black {
+    color: black;
+}

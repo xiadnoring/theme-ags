@@ -1,0 +1,32 @@
+@use './colors' as *;
+@use './material' as *;
+@use './lib_mixins' as *;
+
+.icon-material {
+    @include icon-material;
+}
+
+.icon-box {
+    background-color: $surface;
+    padding: 1px 4px 1px 4px;
+    border-radius: 10px;
+    > label:last-child:not(.icon-material) {
+        margin-top: 1px;
+    }
+
+    > label:first-child:not(.icon-material) {
+        margin-top: 1px;
+    }
+}
+
+.audio-volume-box {
+    //min-width: 4rem;
+}
+
+.monitor-lock {
+    background-color: transparent;
+}
+
+* {
+    border: none;
+}

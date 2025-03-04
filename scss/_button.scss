@@ -1,0 +1,68 @@
+@use './colors' as *;
+@use './material' as *;
+@use './lib_mixins' as *;
+
+.btn {
+    background-color: $utilsLayer3;
+    color: $utilsOnLayer2;
+    min-width: 0px;
+    min-height: 0px;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus, 
+.btn-hover {
+    background-color: $layer2Hover;
+}
+
+.btn:active, .btn-active {
+    background-color: $layer2Active;
+}
+
+.btn-icon-6 {
+    @include element_decel;
+    @include icon-material;
+    @include full-rounding;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    font-size: 0.9rem;
+    min-width: 0.8rem;
+    min-height: 1.2rem;
+}
+
+.btn-icon-4 {
+    @extend .btn-icon-6;
+    padding-right: 0.45rem;
+    padding-left: 0.45rem;
+    
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+    
+}
+
+.btn-icon {
+    @extend .btn-icon-6;
+}
+
+.btn-square2 {
+    border-radius: 0;
+    border-width: 0px;
+}
+
+.btn-square {
+    border-radius: 0;
+    border-width: 0px;
+    
+    &:not(:hover):not(:focus) {
+        background: transparent;
+    }
+}
+
+.btn-transparent {
+    &:not(:hover):not(:focus) {
+        background: transparent;
+    }
+}

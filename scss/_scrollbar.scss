@@ -1,0 +1,11 @@
+@use './colors' as *;
+@use './material' as *;
+@use './lib_mixins' as *;
+
+.scrollbar {
+    @include element_decel;
+    border-color: transparent;
+    margin: 0;
+    padding: 0;
+    border-style: none;
+}

@@ -1,0 +1,28 @@
+.app-list {
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-width: 0;
+
+    .app-icon {
+        background-size: cover;
+        background-position: center;
+        min-width: 3rem;
+        min-height: 3rem;
+    }
+
+    .app-btn {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-radius: 0;
+        border-width: 0;
+        box-shadow: none;
+        &:not(:hover):not(:focus) {
+            background: transparent;
+        }
+        &:focus {
+            border-radius: 0;
+            border: none;
+        }
+    }
+}
