@@ -164,6 +164,10 @@ async function build (monitor: Gdk.Monitor) {
     bd.add (() => destroyed = true);
 
     function resolvegui () {
+        if (destroyed) {
+            return;
+        }
+        
         for (const child of cron_jobs.get_children()) {
             cron_jobs.remove(child);
         }
@@ -233,7 +237,7 @@ async function build (monitor: Gdk.Monitor) {
 export function ags_settings_cron_tab () {
     return {
         build,
-        icon: 'desktop-colored',
+        icon: 'services-colored',
         name: 'Crontab'
     };
 }

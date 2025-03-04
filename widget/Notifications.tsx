@@ -87,6 +87,7 @@ function notification (n: {id: number, appname: string, summary: string, appicon
 
     const resolved = () => { parent.remove(data); };
     parent.add (data);
+    parent.reorder_child (data, 0);
 
     bd.add ((id: number) => obj.disconnect(id), obj.connect ('invoked', resolved));
     bd.add ((id: number) => obj.disconnect(id), obj.connect ('resolved', resolved));
