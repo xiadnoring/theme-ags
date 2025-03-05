@@ -171,6 +171,7 @@ export function Menu (monitor: Gdk.Monitor) {
     const show_all_apps_menu = new Widget.Box ({
         halign: Gtk.Align.END,
         name: "close",
+        className: "bg-transparent",
         children: [
             new Widget.Button ({
                 label: "Back",
@@ -183,7 +184,8 @@ export function Menu (monitor: Gdk.Monitor) {
     /** stack menu */
     const stackmenu = new Widget.Stack ({
         children: [textview, show_all_apps_menu],
-        shown: 'entry'
+        shown: 'entry',
+        className: "bg-widget"
     });
 
     const applist = AppList(monitor, {});
@@ -206,12 +208,14 @@ export function Menu (monitor: Gdk.Monitor) {
         if (show) {
             stackmenu.shown = 'close';
             stack.shown = 'apps';
+            stack.grab_focus();
 
             applist.search_cb ('');
         }
         else {
             stackmenu.shown = 'entry';
             stack.shown = 'main';
+            textview.grab_focus();
         }
     };
 
