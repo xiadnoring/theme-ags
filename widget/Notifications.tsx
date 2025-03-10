@@ -79,7 +79,7 @@ function notification (n: {id: number, appname: string, summary: string, appicon
             </box>
             <box hexpand={true} className="pt-2 gap-h-2">
                 {n.actions.map ((action) => {
-                    return <button hexpand={true} className="btn" label={action.label} onClick={() => obj.invoke(action.id)}></button>
+                    return action.label ? <button hexpand={true} className="btn" label={action.label} onClick={() => obj.invoke(action.id)}></button> : null
                 })}
             </box>
         </box>
