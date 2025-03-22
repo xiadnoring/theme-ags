@@ -85,7 +85,7 @@ export function buildSettingParam (icon: string|Binding<string>, name: string|Bi
                         if (cb) { value.set(param.value); cb (param.value); }
                         revealer_select?.set_reveal_child(false);
                         state_opened?.set(false);
-                    }} className={(value as Variable<string>)().as((n) => ['py-3', n == param.value ? 'btn-square2 btn-active rounded-4' : 'btn-square rounded-4'].join(' '))}>
+                    }} className={(value as Variable<string>)().as((n) => ['settings-select-btn py-3', n == param.value ? 'btn-square2 btn-active rounded-4' : 'btn-square rounded-4'].join(' '))}>
                         <box halign={Gtk.Align.START} valign={Gtk.Align.CENTER} orientation={Gtk.Orientation.VERTICAL}>
                             <label label={param.name} halign={Gtk.Align.START} className="font-weight-500" ellipsize={Pango.EllipsizeMode.END}></label>
                             <label label={param.describe} halign={Gtk.Align.START} className="font-weight-300" ellipsize={Pango.EllipsizeMode.END}></label>

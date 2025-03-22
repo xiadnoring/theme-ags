@@ -25,5 +25,18 @@
         }
     }
 
+    .settings-wifi-list {
+        .btn-hover {
+            background-color: $layer3Active;
+        }
+    }
+}
+
+.settings-select-btn:hover {
+    background-color: $layer1Active;
+}
+
+.settings-select-btn.btn-active {
+    background-color: $layer3Active;
     
 }

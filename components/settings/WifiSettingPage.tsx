@@ -214,7 +214,7 @@ async function build () {
     const gwifilist = new Widget.Box ({
         hexpand: true,
         orientation: Gtk.Orientation.VERTICAL,
-        className: "gap-v-2 mx-2 my-2"
+        className: "gap-v-2 mx-2 my-2 settings-wifi-list"
     });
     boxpropschildren.push (buildSettingParam('wifi', 'Available Networks', '', gwifilist))
     const local_fetch_current_networks = () => _fetch_current_networks (gwifilist, wifilist);
