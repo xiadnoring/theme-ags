@@ -5,7 +5,7 @@ import { desktop } from "../lib/app";
 import { Astal, Gdk, GLib, Gtk, Log, Variable, Widget } from "../lib/imports";
 import { Mutex, tryAcquire } from "../modules/async-mutex";
 import { ags_settings_sound_page } from "../components/settings/SoundSettingPage";
-import { err_num } from "../lib/error";
+import { AgsError, err_num } from "../lib/error";
 import { ags_settings_wifi } from "../components/settings/WifiSettingPage";
 import { ags_settings_cron_tab } from "../components/settings/CronTab";
 import { ags_settings_apps } from "../components/settings/Apps";
@@ -18,7 +18,7 @@ function page_loading_build () : Gtk.Widget {
     </box>;
 }
 
-export async function AgsSettingsWidget (monitor: Gdk.Monitor) {
+export async function AgsSettingsWidget (monitor: Gdk.Monitor, start_page?: string) {
     const monitorid = desktop.gdkmonitor2id (monitor);
     
     try {
@@ -38,7 +38,23 @@ export async function AgsSettingsWidget (monitor: Gdk.Monitor) {
             let params = [ags_settings_about_system(), ags_settings_wifi(), ags_settings_power_page(), ags_settings_sound_page(), ags_settings_cron_tab()];
             let current_param: Gtk.Widget = new Widget.Box({});
 
-            params[0].build(monitor).then ((n) => {
+            let start_index = 0;
+
+            if (start_page) {
+                let i = 0;
+                for (; i < params.length; ++i) {
+                    if (params[i].name == start_page) {
+                        start_index = i;
+                        break;
+                    }
+                }
+                if (i == params.length) {
+                    /** not found */
+                    Log.error (err_num.SETTINGS_PAGE_NOT_FOUND, `Failed to find ${start_page}. Available: ${params.map ((n) => n.name).join(', ')}`);
+                }
+            }
+
+            params[start_index].build(monitor).then ((n) => {
                 status.set ("content");
 
                 if (current_param) {
@@ -54,7 +70,7 @@ export async function AgsSettingsWidget (monitor: Gdk.Monitor) {
                 }
             });
 
-            let current_name = Variable (params[0].name);
+            let current_name = Variable (params[start_index].name);
 
             const width = Math.min(monitor.get_geometry().width, 1200);
             const height = Math.min(monitor.get_geometry().height, 900);

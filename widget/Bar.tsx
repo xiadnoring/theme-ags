@@ -53,8 +53,8 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                     {notificationsState(gdkmonitor)}
                     {getIdleInhibitorState()}
                     {getLanguageState()}
-                    {getAudioVolumnState({percentage: false})}
-                    {getWifiState()}
+                    {getAudioVolumnState(gdkmonitor, {percentage: false})}
+                    {getWifiState(gdkmonitor)}
                     {getBatteryState({percentage: false})}
                 </box>
             </box>

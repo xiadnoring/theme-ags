@@ -1,10 +1,12 @@
 import AstalHyprland from "gi://AstalHyprland";
 import { execAsync } from "astal/process";
-import { GLib, Gtk, Log, Variable, Widget } from "../lib/imports";
+import { Astal, Gdk, GLib, Gtk, Log, Variable, Widget } from "../lib/imports";
 import { active_internet_state, desktop, network } from "../lib/app";
 import AstalNetwork from "gi://AstalNetwork";
+import { AgsSettingsWidget } from "../widget/Settings";
+import { WifiSettingPageName } from "./settings/WifiSettingPage";
 
-export default function getWifiState () {
+export default function getWifiState (monitor: Gdk.Monitor) {
     
     const children: typeof Widget.Stack.prototype.children = [];
 
@@ -66,6 +68,12 @@ export default function getWifiState () {
     unsubs.push(active_internet_state.subscribe (cb));
 
     return <box halign={Gtk.Align.CENTER}>
-        {stack}
+        <eventbox onClick={(self, event) => {
+            if (event.button == Astal.MouseButton.PRIMARY) {
+                AgsSettingsWidget (monitor, WifiSettingPageName);
+            }
+        }}>
+            {stack}
+        </eventbox>
     </box>;
 }

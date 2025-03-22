@@ -21,12 +21,14 @@ else
     output_file="./rec_$(getdate).mp4"
     notify-send "Начало записи" "$output_file" -a 'record-script.sh'
     if [[ "$1" == "--fullscreen" ]]; then
-        wf-recorder -c h264_vaapi -d /dev/dri/renderD128 \
+        #wf-recorder -c h264_vaapi -d /dev/dri/renderD128 \
+	wf-recorder \
             -o "$(getactivemonitor)" \
             -f "$output_file" \
             --audio="$(getaudiooutput)" & disown
     else
-        wf-recorder -c h264_vaapi -d /dev/dri/renderD128 \
+        #wf-recorder -c h264_vaapi -d /dev/dri/renderD128 \
+	wf-recorder \
             -g "$(slurp)" \
             -f "$output_file" \
             --audio="$(getaudiooutput)" & disown

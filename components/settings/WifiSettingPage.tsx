@@ -5,6 +5,8 @@ import { buildSettingParam } from "./SettingParam";
 import AstalNetwork01 from "gi://AstalNetwork";
 import { err_num } from "../../lib/error";
 
+export const WifiSettingPageName = 'Network';
+
 const network_wifi_icon_states = ["network_wifi_1_bar_locked", "network_wifi_2_bar_locked", "network_wifi_3_bar_locked"];
 type wifi_list_t = {[key: string]: {gtk: Gtk.Widget, strength: Variable <number>, cbs: (() => void)[]}};
 
@@ -241,6 +243,6 @@ export function ags_settings_wifi () {
     return {
         build,
         icon: 'wifi-colored',
-        name: 'Network'
+        name: WifiSettingPageName
     };
 }
