@@ -215,8 +215,8 @@ function notifications () {
     listn.sort((a, b): number => {
         const a1 = a.get_time(), b1 = b.get_time();
         if (a1==b1) { return 0; }
-        if (a1>b1) { return-1; }
-        return 1;
+        if (a1>b1) { return 1; }
+        return -1;
     });
 
     for (const n of listn) {
