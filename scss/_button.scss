@@ -56,13 +56,13 @@
     border-radius: 0;
     border-width: 0px;
     
-    &:not(:hover):not(:focus) {
+    &:not(:hover) {
         background: transparent;
     }
 }
 
 .btn-transparent {
-    &:not(:hover):not(:focus) {
+    &:not(:hover) {
         background: transparent;
     }
 }

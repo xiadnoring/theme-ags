@@ -38,7 +38,7 @@ export async function AgsSoundBar (monitor: Gdk.Monitor) {
         const window = <window className="bg-transparent" anchor={Astal.WindowAnchor.RIGHT|Astal.WindowAnchor.TOP} keymode={Astal.Keymode.ON_DEMAND} onDestroy={() => bd.call()} 
              name="sound-bar" gdkmonitor={monitor} application={desktop.App}>
             <box className="m-3 bg-widget rounded-4 sound-bar-osd border border-1 border-secondary">
-                <label className="icon-material font-3 ps-2 py-2" label={iconVolumeState()} />
+                <label className="icon-material font-3 ps-3 py-2" label={iconVolumeState()} />
                 <slider valign={Gtk.Align.CENTER} widthRequest={200} max={1.5} min={0} 
                     onDragged={(self) => audio_device.default_speaker().set_volume (self.value)} value={soundVolume()} />
                 <label halign={Gtk.Align.CENTER} className="sound-bar-osd-percentage" label={soundVolumePercentage.as((n) => `${n}%`)} />

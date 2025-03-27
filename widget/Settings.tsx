@@ -9,6 +9,7 @@ import { AgsError, err_num } from "../lib/error";
 import { ags_settings_wifi } from "../components/settings/WifiSettingPage";
 import { ags_settings_cron_tab } from "../components/settings/CronTab";
 import { ags_settings_apps } from "../components/settings/Apps";
+import { ags_settings_wallpapers_page } from "../components/settings/WallpapersSettingPage";
 
 let monitors = new Set <string> ();
 
@@ -35,7 +36,8 @@ export async function AgsSettingsWidget (monitor: Gdk.Monitor, start_page?: stri
             const content_param = new Widget.Box ({name: "content", hexpand: true});
 
             let status = Variable ("loading");
-            let params = [ags_settings_about_system(), ags_settings_wifi(), ags_settings_power_page(), ags_settings_sound_page(), ags_settings_cron_tab()];
+            let params = [ags_settings_about_system(), ags_settings_wifi(), ags_settings_power_page(), ags_settings_sound_page(), 
+                ags_settings_cron_tab(), ags_settings_wallpapers_page()];
             let current_param: Gtk.Widget = new Widget.Box({});
 
             let start_index = 0;

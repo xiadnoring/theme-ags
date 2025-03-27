@@ -4,6 +4,7 @@ import { App, execAsync, Gdk, GLib, Gtk, Log, Pango, Variable, Widget } from "..
 import { GtkGrid, GtkMenu, GtkMenuItem, TextView } from "../lib/elements";
 import { AppList, build_app_icon } from "../components/AppList";
 import { err_num } from "../lib/error";
+import { before_delete } from "../lib/ondestroy";
 
 type pinned_apps_item_t = {id: string, name: string, icon: string, exec: string};
 type pinned_apps_t = Variable<pinned_apps_item_t[]>;
@@ -32,7 +33,7 @@ function build_pinned_apps_popup_menu (unpin_cb: () => void) {
 }
 
 function get_pinned_apps (monitor: Gdk.Monitor, pinned_apps: pinned_apps_t, refetch: () => void) {
-    const destroy_cbs: (()=>void)[] = [];
+    const bd = new before_delete();
     const list = new GtkGrid ({
         className: "pinned-apps-content",
         name: "overview",
@@ -45,7 +46,7 @@ function get_pinned_apps (monitor: Gdk.Monitor, pinned_apps: pinned_apps_t, refe
         list.insert_row (i * PINNED_COLUMN);
 
         for (let j = 0; j < PINNED_COLUMN; j++) {
-            list.insert_column (i * j);
+            list.insert_column (i * PINNED_COLUMN + j);
         }
     }
 
@@ -60,11 +61,7 @@ function get_pinned_apps (monitor: Gdk.Monitor, pinned_apps: pinned_apps_t, refe
             </box>,
             list
         ],
-        onDestroy: () => {
-            for (const cb of destroy_cbs) {
-                cb();
-            }
-        }
+        onDestroy: () => bd.call()
     });
 
     const menu = build_pinned_apps_popup_menu (() => {
@@ -82,7 +79,7 @@ function get_pinned_apps (monitor: Gdk.Monitor, pinned_apps: pinned_apps_t, refe
     });
 
     // Subscribe
-    destroy_cbs.push(pinned_apps.subscribe ((n) => {
+    bd.add(pinned_apps.subscribe ((n) => {
         if (n.length == 0) {
             stack.shown = 'empty';
         }
@@ -92,7 +89,10 @@ function get_pinned_apps (monitor: Gdk.Monitor, pinned_apps: pinned_apps_t, refe
             // CLEAN UP
             for (let i = 0; i < PINNED_ROW; i++) {
                 for (let j = 0; j < PINNED_COLUMN; j++) {
-                    list.get_child_at (j, i)?.destroy();
+                    const w = list.get_child_at (j, i);
+                    if (w) {
+                        list.remove(w);
+                    }
                 }
             }
 
@@ -123,9 +123,7 @@ function get_pinned_apps (monitor: Gdk.Monitor, pinned_apps: pinned_apps_t, refe
         }
     }));
 
-    destroy_cbs.push(() => {
-        menu.destroy();
-    }); 
+    bd.add(() => menu.destroy()); 
 
     return stack;
 }

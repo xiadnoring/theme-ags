@@ -3,6 +3,7 @@ import { formateDate } from "../../lib/date";
 import { AgsError, err_num } from "../../lib/error";
 import { Astal, execAsync, Gdk, GLib, Gtk, Log, Pango, Variable, Widget } from "../../lib/imports";
 import { before_delete } from "../../lib/ondestroy";
+import { DialogWindow } from "../../widget/Dialog";
 
 
 const active_cron_jobs: {[key: string]: GLib.Source} = {};
@@ -100,15 +101,10 @@ function createcronjob(id: string, exec: string, interval: string, cb: () => voi
     });
 }
 
-function form4newjob (prev_window: Gtk.Widget|null, bd: before_delete, monitor: Gdk.Monitor, cb: () => void) {
-    if (prev_window) {
-        prev_window.destroy();
-    }
-
+function form4newjob (bd: before_delete, monitor: Gdk.Monitor, cb: () => void) {
     let id: string = '', exec: string = '', interval = '';
-
-    const window = <window keymode={Astal.Keymode.ON_DEMAND} className="bg-transparent" gdkmonitor={monitor} name="form4newcronjob">
-        <box vertical css="min-width: 500px;" className="bg-widget border border-1 border-secondary gap-v-4 p-5 rounded-4">
+    DialogWindow (monitor, (close) => {
+        return <box vertical css="min-width: 500px;" className="bg-widget border border-1 border-secondary gap-v-4 p-5 rounded-4">
             <box>
                 <label className="bold" label={"New Cron Job"}></label>
             </box>
@@ -126,17 +122,15 @@ function form4newjob (prev_window: Gtk.Widget|null, bd: before_delete, monitor: 
                     <entry hexpand={true} onChanged={(self) => interval = self.get_text()}></entry>
                 </box>
                 <box halign={Gtk.Align.END} className={"gap-h-2"}>
-                    <button label={"Cancel"} onClick={() => window.hide()}></button>
+                    <button label={"Cancel"} onClick={() => close()}></button>
                     <button label={"Save"} onClick={() => {
-                        window.hide();
                         createcronjob(id, exec, interval, cb);
+                        close();
                     }}></button>
                 </box>
             </box>
         </box>
-    </window>;
-
-    return window;
+    });
 }
 
 async function get_cron_jobs () : Promise<{id: string, exec: string, interval: number, last_execution: number}[]> {
@@ -160,7 +154,6 @@ async function build (monitor: Gdk.Monitor) {
         hexpand: true
     });
 
-    bd.add (() => current_window?.destroy());
     bd.add (() => destroyed = true);
 
     function resolvegui () {
@@ -221,7 +214,7 @@ async function build (monitor: Gdk.Monitor) {
             <box halign={Gtk.Align.END}>
                 <button label="Add Job" onClick={() => {
                     /** show form for new job */
-                    current_window = form4newjob(current_window, bd, monitor, () => resolvegui());
+                    form4newjob(bd, monitor, () => resolvegui());
                 }}></button>
             </box>
         </centerbox>
