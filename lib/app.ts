@@ -26,7 +26,8 @@ enum MonitorTheme {
 type Databases = {
     'menu-pinned': Datastore,
     'hashes': Datastore,
-    'crontab': Datastore
+    'crontab': Datastore,
+    'wallpapers': Datastore
 };
 
 
@@ -75,7 +76,7 @@ class Desktop {
         this.bind_values();
         
         const dbs: {[key: string]: Datastore} = {};
-        for (const dbtype of ['menu-pinned', 'hashes', 'crontab']) {
+        for (const dbtype of ['menu-pinned', 'hashes', 'crontab', 'wallpapers']) {
             dbs[dbtype] = new Datastore ({filename:  this.user_config_dir + '/db/' + dbtype + '.db'});
             dbs[dbtype].loadDatabase ((err: Error|null) => {
                 if (err != null) {
@@ -101,6 +102,10 @@ class Desktop {
 
         this.databases["crontab"].ensureIndex ({fieldName: 'id', unique: true}, (err: Error|null) => {
             if (err != null) { Log.error (err_num.DB_ERROR, "Failed to make column indexing in 'crontab'"); }
+        });
+
+        this.databases["wallpapers"].ensureIndex ({fieldName: 'path', unique: true}, (err: Error|null) => {
+            if (err != null) { Log.error (err_num.DB_ERROR, "Failed to make column indexing in 'wallpapers'"); }
         });
     }
 

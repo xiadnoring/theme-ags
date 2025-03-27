@@ -2,6 +2,7 @@ import { App, Astal, BindableProps, ConstructProps, Gdk, Gtk, Widget, astalify }
 import GLib from "gi://GLib";
 import Pango from "gi://Pango";
 import Gio from "gi://Gio";
+import Gst from "gi://Gst";
 import { exec, execAsync } from 'astal/process';
 import { log } from './error';
 import { Variable } from 'astal/variable';
@@ -24,5 +25,6 @@ export {
     execAsync,
     interval,
     timeout,
-    log as Log
+    log as Log,
+    Gst
 }

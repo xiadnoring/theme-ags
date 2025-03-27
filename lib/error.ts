@@ -90,7 +90,7 @@ class Log {
     }
 
     exception (e: any, msg?: string) {
-        
+        console.log('Exception', e.msg, msg, e.stack);
     }
 }
 

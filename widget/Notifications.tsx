@@ -3,7 +3,6 @@ import { Astal, Gdk, GLib, Gtk, Log, Pango, Variable, Widget } from "../lib/impo
 import Notifd from "gi://AstalNotifd"
 import { before_delete } from "../lib/ondestroy";
 import { TextView } from "../lib/elements";
-import { Scrollable } from "astal/gtk3/widget";
 import { mergeClasses } from "../lib/styles";
 import { isIcon } from "../lib/icons";
 import fs from "../modules/fs";
@@ -255,7 +254,7 @@ function notifications () {
                     child: buttons,
                     onClick: () => alsopressed.set(true),
                 }),
-                new Scrollable ({
+                new Widget.Scrollable ({
                     child: notifications,
                     vscroll: Gtk.PolicyType.EXTERNAL,
                     hscroll: Gtk.PolicyType.NEVER,

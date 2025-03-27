@@ -491,8 +491,9 @@ Datastore.prototype.count = function(query, callback) {
 /**
  * Find all documents matching the query
  * If no callback is passed, we return the cursor so that user can limit, skip and finally exec
- * @param {Object} query MongoDB-style query
- * @param {Object} projection MongoDB-style projection
+ * @param {Object|undefined} query MongoDB-style query
+ * @param {Object|undefined} projection MongoDB-style projection
+ * @param {Object|undefined} callback callback
  */
 Datastore.prototype.find = function (query, projection, callback) {
   switch (arguments.length) {

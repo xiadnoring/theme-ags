@@ -31,7 +31,7 @@ async function generate_file_element (filepath: string, file: Gio.FileInfo, curr
     </button>;
 }
 
-async function grab_files_and_fill (files_view: Gtk.Grid, filepath: string, current_path: Variable<string>, prev_rows: number = 0): Promise<{ rows: number, isfolder: boolean }> {
+async function grab_files_and_fill (files_view: Gtk.Grid, filepath: string, current_path: Variable<string>, prev_rows: number = 0): Promise<{ rows: number, isfolder: boolean, isfile: boolean }> {
     let rows = 0;
     let cols = 0;
     let prev_cols = prev_rows * MAX_COLS;
@@ -68,7 +68,7 @@ async function grab_files_and_fill (files_view: Gtk.Grid, filepath: string, curr
         
     }
 
-    return {rows, isfolder};
+    return {rows, isfolder, isfile : await fs.is_file(filepath)};
 }
 
 export function FileChooserWindow (gdkmonitor: Gdk.Monitor, props: { multiple?: boolean }, callback: (files: string[]) => void) {
@@ -90,6 +90,10 @@ export function FileChooserWindow (gdkmonitor: Gdk.Monitor, props: { multiple?: 
                 await grab_files_and_fill (files_view, path, current_path, rows).then (data => {
                     if (data.isfolder) {
                         rows += data.rows;
+                    }
+                    if (data.isfile) {
+                        callback ([path]);
+                        close();
                     }
                 });
             }

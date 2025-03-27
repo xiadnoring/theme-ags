@@ -1,4 +1,4 @@
-import { App, Astal, Gtk, Gdk } from "astal/gtk3"
+import { App, Astal, Gtk, Gdk } from "../lib/imports"
 import { Variable } from "astal"
 import CurrentDate from "../components/CurrentDate"
 import getProccessState from "../components/ProcessorState"

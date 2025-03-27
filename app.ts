@@ -1,7 +1,10 @@
-import { App } from "./lib/imports"
+import { App, Gst, Gtk } from "./lib/imports"
 import { desktop } from "./lib/app"
 import { hypland_prepare } from "./components/Workspaces";
 import { audio_device } from "./services/SoundVolume";
+
+Gtk.init(null);
+Gst.init(null);
 
 App.start({
     main() {
