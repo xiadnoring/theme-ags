@@ -2,7 +2,7 @@ import { Variable } from "astal/variable";
 import { Gio, monitorFile } from "astal/file";
 import { monitorConfig } from "./config";
 import { exec, execAsync } from 'astal/process';
-import { App, Astal, Gdk, GLib, Gtk, Log } from "./imports";
+import { App, Astal, Gdk, GLib, Gtk, Log, Gst } from "./imports";
 import { AgsError, err_num, log } from './../lib/error';
 import Bar from "../widget/Bar";
 import { monitorBlock } from "../components/MonitorBlock";
@@ -30,13 +30,23 @@ type Databases = {
     'wallpapers': Datastore
 };
 
-
+// [major, minor, micro]
+export const gtkVersion = [Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version()];
+export const gstVersion = Gst.version();
 export const network = AstalNetwork.get_default();
 export const active_access_point: Variable <AstalNetwork.AccessPoint|null> = Variable (network.get_wifi()?.get_active_access_point() ?? null);
 export const active_internet_state: Variable<AstalNetwork.Internet> = Variable (AstalNetwork.Internet.DISCONNECTED).poll (1300, () => {
     active_access_point.set(network.get_wifi()?.get_active_access_point() ?? null);
     return network.wifi.get_enabled() ? network.wifi.get_internet() : AstalNetwork.Internet.DISCONNECTED 
 });
+
+export const isGstVersionAtLeast = (major: number, minor: number) => {
+    return gstVersion[0] > major || (gstVersion[0] === major && gstVersion[1] >= minor);
+};
+
+export const isGtkVersionAtLeast = (major: number, minor: number) => {
+    return gtkVersion[0] > major || (gtkVersion[0] === major && gtkVersion[1] >= minor);
+};
 
 class Desktop {
     config: Variable<{[key: string]: any}>

@@ -37,7 +37,7 @@ export async function AgsSettingsWidget (monitor: Gdk.Monitor, start_page?: stri
 
             let status = Variable ("loading");
             let params = [ags_settings_about_system(), ags_settings_wifi(), ags_settings_power_page(), ags_settings_sound_page(), 
-                ags_settings_cron_tab(), /**ags_settings_wallpapers_page()**/];
+                ags_settings_cron_tab(), ags_settings_wallpapers_page()];
             let current_param: Gtk.Widget = new Widget.Box({});
 
             let start_index = 0;

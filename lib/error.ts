@@ -24,7 +24,9 @@ export enum err_num {
     NETWORK_SERVICE_ERROR,
     BATTERY_SERVICE_ERROR,
     CRONJOB_ERROR,
-    SETTINGS_PAGE_NOT_FOUND
+    SETTINGS_PAGE_NOT_FOUND,
+    GST_ERROR,
+    IMPORT_ERROR
 };
 
 export const err_msg = new Map <err_num, string> ([
@@ -52,7 +54,9 @@ export const err_msg = new Map <err_num, string> ([
     [err_num.AUDIO_SERVICE_ERROR, "Audio Service Error"],
     [err_num.BATTERY_SERVICE_ERROR, "Battery Service Error"],
     [err_num.CRONJOB_ERROR, "Cron Job Error"],
-    [err_num.SETTINGS_PAGE_NOT_FOUND, "Settings Page Not Found"]
+    [err_num.SETTINGS_PAGE_NOT_FOUND, "Settings Page Not Found"],
+    [err_num.GST_ERROR, "Gst Error"],
+    [err_num.IMPORT_ERROR, "Import error"]
 ]);
 
 export function get_errmsg_by_errnum (errnum: err_num) {
@@ -89,8 +93,8 @@ class Log {
         console.log(errnum, msg);
     }
 
-    exception (e: any, msg?: string) {
-        console.log('Exception', e.msg, msg, e.stack);
+    exception (e: any, msg?: string, errnum?: err_num) {
+        console.log('Exception', e.message, msg, errnum, e.stack);
     }
 }
 

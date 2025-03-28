@@ -11,41 +11,29 @@ import { Gdk } from "../../lib/imports";
 import { before_delete } from "../../lib/ondestroy";
 import { desktop } from "../../lib/app";
 import { GtkGrid } from "../../lib/elements";
+import { mergeClasses } from "../../lib/styles";
 
 const MAX_COLS = 3;
 
-async function build_wallpaper_preview (row: {path: string, favorite: boolean, monitor: null|number}): Promise<Gtk.Widget> {
-    let w: Gtk.Widget;
-    try {
-        // const pipeline = new Gst.Pipeline ({name: "xvoverlay"});
-        // const src = Gst.ElementFactory.make ("gltestsrcne");
-        // const sink = Gst.ElementFactory.make ("glimagesinkne");
-        // if (!src || !sink) {
-        //     throw new AgsError (err_num.AUDIO_SERVICE_ERROR, "video init failed");
-        // }
-        // pipeline.add(src);
-        // pipeline.add(sink);
-        // src.link(sink);
-
-        // w = new Widget.DrawingArea ({
-        //     expand: true
-        // });
-        
-        // sink.set();
-    }
-    catch (e) {
-        if (e instanceof Error) {
-            Log.exception (e, "Failed to load a video file");
+async function build_wallpaper_preview (row: {path: string, favorite: boolean, monitor: null|number}|null): Promise<Gtk.Widget> {
+    if (row !== null) {
+        try {
+            throw new Error ('failed');
         }
-        else {
-            console.log(e);
+        catch (e) {
+            if (e instanceof Error) {
+                Log.exception (e, "Failed to load a video file");
+            }
+            else {
+                console.log(e);
+            }
         }
-
-        w = <label label={row.path}></label>
     }
 
-    return <box>
-        {/* {w} */}
+    return <box hexpand={true} className={row !== null ? 
+        mergeClasses("wallpaper-video-preview", "m-2","rounded-4","bg-black","border","border-1","border-secondary") 
+            : mergeClasses("wallpapers-video-preview", "m-2", "bg-transparent")}>
+
     </box>;
 }
 
@@ -57,7 +45,7 @@ async function build (gdkmonitor: Gdk.Monitor) {
     let ready = Variable(true);
 
     const wallpapers = new GtkGrid ({
-        
+        className: "wallpaper-video-preview-grid"
     });
 
     const scroll = new Widget.Scrollable ({
@@ -65,6 +53,7 @@ async function build (gdkmonitor: Gdk.Monitor) {
         hscrollbarPolicy: Gtk.PolicyType.NEVER,
         vscrollbarPolicy: Gtk.PolicyType.AUTOMATIC,
         hexpand: true,
+        vexpand: true,
         onDestroy: () => scrollbd.call()
     });
 
@@ -119,6 +108,15 @@ async function build (gdkmonitor: Gdk.Monitor) {
                             }
                         }
 
+                        if (cols != 0) {
+                            // fill
+                            while (cols != MAX_COLS) {
+                                wallpapers.insert_column((rows - 1) * MAX_COLS + (cols++));
+                                wallpapers.attach (await build_wallpaper_preview(null), (cols - 1), (rows - 1), 1, 1);
+                            }
+                            cols = 0;
+                        }
+
                         resolve();
                     });
                 }
@@ -143,7 +141,7 @@ async function build (gdkmonitor: Gdk.Monitor) {
 
     grab_next_wallpapers();
 
-    return <box className={"gap-v-4"} onDestroy={() => bd.call()} hexpand={true} vertical={true}>
+    return <box className={"gap-v-4 settings-wallpapers"} onDestroy={() => bd.call()} hexpand={true} vertical={true}>
         <centerbox hexpand={true}>
             <box></box>
             <box></box>

@@ -249,7 +249,9 @@ $spec_colors: (
     "warning":    $warning,
     "danger":     $danger,
     "light":      $light,
-    "dark":       $dark
+    "dark":       $dark,
+    "black":      $black,
+    "white":      $white
 );
 
 @each $key, $value in $spec_colors {
