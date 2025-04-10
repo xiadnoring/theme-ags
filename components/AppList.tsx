@@ -43,7 +43,7 @@ export function AppList (monitor: Gdk.Monitor, props: AppListProps) {
         }
     }
 
-    menu._setChildren ([
+    menu.children = [
         new GtkMenuItem ({
             label: current_pin_status().as((n) => n ? 'Unpin App' : 'Pin App'),
             onButtonReleaseEvent: on_primary_click ((event, app) => {
@@ -118,7 +118,7 @@ export function AppList (monitor: Gdk.Monitor, props: AppListProps) {
                 clipoboard.set_text (execbash, execbash.length);
             })
         })
-    ]);
+    ];
 
     const search_cb = (search: string) => {
         const children: typeof content.children = [];

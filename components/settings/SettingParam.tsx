@@ -42,7 +42,7 @@ export function buildSettingParam (icon: string|Binding<string>, name: string|Bi
         case paramtype.SELECT:
         case paramtype.REVEALER:
             state_opened = Variable(false);
-            boxend._setChildren ([<icon icon={state_opened().as(n => n ? "angle-down-symbolic" : "angle-up-symbolic")}></icon>]);
+            boxend.children = ([<icon icon={state_opened().as(n => n ? "angle-down-symbolic" : "angle-up-symbolic")}></icon>]);
             break;
         case paramtype.SWITCH:
             const _switch = new Widget.Switch ({
@@ -53,7 +53,7 @@ export function buildSettingParam (icon: string|Binding<string>, name: string|Bi
                 if (cb) cb (state);
             });
 
-            boxend._setChildren ([_switch]);
+            boxend.children = ([_switch]);
             break;
     }
     const _desciption = (description: string) => <label halign={Gtk.Align.START} label={description} className="font-weight-400 font-1" selectable={false}></label>;

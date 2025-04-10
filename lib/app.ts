@@ -65,6 +65,7 @@ class Desktop {
     private on_destroy_cbs: Set <() => Promise<void>>;
 
     constructor (config_path: string, App: Astal.Application) {
+        if (config_path.length && config_path[0] == '~') { config_path = config_path = GLib.getenv('HOME') + config_path.substring(1); }
         this.configDir =  GLib.getenv('HOME') + '/.config/ags';
         this.user_config_dir = GLib.getenv('HOME') + "/.ags";
         
@@ -356,4 +357,4 @@ class Desktop {
 };
 
 
-export const desktop = new Desktop ('/home/Timur/.ags/config.json', App);
+export const desktop = new Desktop ('~/.ags/config.json', App);

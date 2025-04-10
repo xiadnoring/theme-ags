@@ -63,7 +63,7 @@ async function _fetch_current_networks (gwifilist: Widget.Box, wifilist: wifi_li
                     /** btn connect */
                     let btn_connect_state_connect = () => new Widget.Button({
                         onClicked: () => {
-                            execAsync (`/home/Timur/Desktop/WorkSpace/NetworkManager/build/src/nmcli/nmcli device wifi connect ${connection.get_bssid()}`).catch ((e) => {
+                            execAsync (`nmcli device wifi connect ${connection.get_bssid()}`).catch ((e) => {
                                 if (e instanceof Gio.IOErrorEnum) {
                                     const msg2 = 'Error: Connection activation failed: Secrets were required, but not provided.';
                                     if (e.message.indexOf(msg2)>=0) {
@@ -83,7 +83,7 @@ async function _fetch_current_networks (gwifilist: Widget.Box, wifilist: wifi_li
                     /** Log In btn */
                     let btn_connect_state_auth = () => new Widget.Button({
                         onClicked: () => {
-                            const ex = `/home/Timur/Desktop/WorkSpace/NetworkManager/build/src/nmcli/nmcli device wifi connect ${connection.get_bssid()} password ${entry.get_buffer().get_text()}`;
+                            const ex = `nmcli device wifi connect ${connection.get_bssid()} password ${entry.get_buffer().get_text()}`;
                             execAsync (ex).catch ((e) => {
                                 if (destroyed_flag) {
                                     /** was destroyed */
@@ -231,7 +231,7 @@ async function build () {
     destroy_cbs.push (() => wifi_update_list_interval.cancel());
     destroy_cbs.push (() => wifi_list_rhs.forEach ((n) => wifi?.disconnect(n)));
 
-    boxprops._setChildren (boxpropschildren);
+    boxprops.children = (boxpropschildren);
     return <box onDestroy={() => {
         for (const cb of destroy_cbs) { cb(); }
     }} orientation={Gtk.Orientation.VERTICAL} hexpand={true} className={"gap-v-4"}>

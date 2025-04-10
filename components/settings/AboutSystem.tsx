@@ -126,7 +126,7 @@ async function build () {
     for (const prop of Object.entries(props)) {
         boxpropschildren.push(buildSettingParam (prop[1].icon, prop[0], prop[1].description));
     }   
-    boxprops._setChildren (boxpropschildren);
+    boxprops.children = boxpropschildren;
 
     return <box orientation={Gtk.Orientation.VERTICAL} hexpand={true} className={"gap-v-4"}>
         <icon css={"font-size: 20rem;"} icon={icon_by_distro(os_release['ID'])}></icon>

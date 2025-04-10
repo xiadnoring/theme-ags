@@ -31,7 +31,7 @@ async function build () {
         }, { max: 1, min: 0 }));
     }
     
-    boxprops._setChildren (boxpropschildren);
+    boxprops.children = (boxpropschildren);
     return <box onDestroy={() => {
         for (const cb of destroy_cbs) { cb(); }
     }} orientation={Gtk.Orientation.VERTICAL} hexpand={true} className={"gap-v-4"}>

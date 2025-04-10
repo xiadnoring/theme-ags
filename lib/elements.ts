@@ -25,13 +25,13 @@ export class GtkMenuItem extends astalify(Gtk.MenuItem) {
     }
 }
 
-export class GtkMenuButton extends astalify(Gtk.MenuButton) {
-    static { GObject.registerClass(this) }
+// export class GtkMenuButton extends astalify(Gtk.MenuButton) {
+//     static { GObject.registerClass(this) }
 
-    constructor (props: ConstructProps<GtkMenuButton, Gtk.MenuButton.ConstructorProps>) {
-        super (props as any);
-    }
-}
+//     constructor (props: ConstructProps<GtkMenuButton, Gtk.MenuButton.ConstructorProps>) {
+//         super (props as any);
+//     }
+// }
 
 export class GtkGrid extends astalify(Gtk.Grid) {
     static { GObject.registerClass(this) }
